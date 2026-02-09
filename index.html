@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Mercy Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* === MIDNIGHT GALA PALETTE === */
+        :root {
+            --deep-onyx: #0D0D0D;
+            --antique-gold: #C5A059;
+            --dusty-rose: #DCAE96;
+            --cream-white: #F9F7F2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+        }
+        
+        body {
+            background-color: var(--deep-onyx);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            color: var(--cream-white);
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            background: rgba(13, 13, 13, 0.85);
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--antique-gold);
+        }
+        
+        /* Elegant header styling */
+        h1 {
+            color: var(--cream-white);
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--antique-gold), transparent);
+        }
+        
+        .subtitle {
+            color: var(--dusty-rose);
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+        
+        .heart {
+            color: var(--dusty-rose);
+            animation: heartbeat 1.8s infinite ease-in-out;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Video container with matte frame */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Love emoji with subtle animation */
+        .love-emoji {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3.5rem;
+            animation: float 4s ease-in-out infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-5deg); }
+        }
+        
+        /* Button styling with antique gold */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn {
+            padding: 20px 50px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+            text-transform: uppercase;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-yes {
+            background-color: var(--antique-gold);
+            color: var(--deep-onyx);
+            border: 2px solid var(--antique-gold);
+        }
+        
+        .btn-no {
+            background-color: transparent;
+            color: var(--dusty-rose);
+            border: 2px solid var(--dusty-rose);
+        }
+        
+        .btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-2px);
+        }
+        
+        /* Hidden elements */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Fireworks container */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--antique-gold);
+        }
+        
+        /* Success message with elegant styling */
+        .message {
+            background-color: rgba(13, 13, 13, 0.95);
+            padding: 50px;
+            border-radius: 12px;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            color: var(--cream-white);
+            border: 2px solid var(--antique-gold);
+            max-width: 700px;
+            animation: fadeIn 1.2s ease-out;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message h2 {
+            color: var(--antique-gold);
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+        
+        .countdown {
+            font-size: 1.4rem;
+            color: var(--dusty-rose);
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+        
+        .no-clicks {
+            font-size: 1.3rem;
+            color: var(--dusty-rose);
+            margin-top: 20px;
+            font-weight: 300;
+            min-height: 30px;
+            font-style: italic;
+        }
+        
+        /* New pulse animation for YES button */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.4rem; }
+            .subtitle { font-size: 1.2rem; }
+            .btn { font-size: 1.5rem; padding: 18px 35px; min-width: 160px; }
+            .message { font-size: 1.5rem; padding: 30px; }
+            .buttons { gap: 25px; }
+            .container { padding: 30px 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            .btn { font-size: 1.3rem; padding: 15px 25px; min-width: 140px; }
+            .buttons { gap: 15px; flex-direction: column; align-items: center; }
+            .message { font-size: 1.3rem; padding: 25px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mercy Will You Be My Valentine? <span class="heart">❤️</span></h1>
+        <p class="subtitle">A question from my heart to yours...</p>
+        
+        <div class="video-container">
+            <!-- Updated Minion Video Source -->
+            <video id="minionVideo" autoplay loop muted playsinline>
+                <!-- Source 1: Primary video from Pexels -->
+                <source src="minion valentine video.mp4" type="video/mp4">
+                <!-- Fallback Source 2: Alternate minion video -->
+                <source src="https://cdn.pixabay.com/video/2023/03/23/160254-806305416_large.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="love-emoji">💖</div>
+        </div>
+        
+        <p class="countdown">I await your answer with hope in my heart</p>
+        
+        <div class="buttons">
+            <button id="yesBtn" class="btn btn-yes">
+                <i class="fas fa-heart"></i> YES
+            </button>
+            <button id="noBtn" class="btn btn-no">
+                <i class="fas fa-times"></i> NO
+            </button>
+        </div>
+        
+        <div class="no-clicks" id="noMessage"></div>
+        
+        <div id="successPage" class="hidden">
+            <div class="message">
+                <h2>You've Made Me So Happy!</h2>
+                <p>Thank you for saying yes and making this Valentine's Day truly special.</p>
+                <p>My heart is filled with joy and gratitude.</p>
+                <div style="font-size: 4rem; margin: 25px 0; color: var(--antique-gold);">💖</div>
+                <p>I cannot wait to celebrate this day with you.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="fireworksContainer" class="fireworks-container hidden"></div>
+
+    <script>
+        // DOM elements
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const noMessage = document.getElementById('noMessage');
+        const minionVideo = document.getElementById('minionVideo');
+        const successPage = document.getElementById('successPage');
+        const fireworksContainer = document.getElementById('fireworksContainer');
+        const container = document.querySelector('.container');
+        
+        // Variables
+        let noClicks = 0;
+        let yesSize = 1;
+        const messages = [
+            "Are you certain?",
+            "Perhaps reconsider?",
+            "I believe in second chances...",
+            "This could be our beginning",
+            "Would you think once more?",
+            "My heart remains hopeful",
+            "Is that truly your answer?",
+            "I await a different reply",
+            "Let's not end this story here",
+            "The question still stands",
+            "I'm listening for a 'yes'",
+            "Our story deserves a chance",
+            "Will you change your mind?",
+            "I remain here, waiting"
+        ];
+        
+        // Handle YES button click
+        yesBtn.addEventListener('click', function() {
+            // Hide main content
+            document.querySelector('h1').classList.add('hidden');
+            document.querySelector('.subtitle').classList.add('hidden');
+            document.querySelector('.countdown').classList.add('hidden');
+            document.querySelector('.buttons').classList.add('hidden');
+            noMessage.classList.add('hidden');
+            
+            // Show success page
+            successPage.classList.remove('hidden');
+            
+            // Create fireworks celebration
+            createFireworks();
+            
+            // Change video to fireworks celebration
+            minionVideo.src = "fireworks.mp4";
+            minionVideo.load();
+            minionVideo.play();
+            
+            // Show fireworks overlay
+            fireworksContainer.classList.remove('hidden');
+        });
+        
+        // Handle NO button click
+        noBtn.addEventListener('click', function() {
+            // Increase no click count
+            noClicks++;
+            
+            // Show an elegant message
+            if (noClicks <= messages.length) {
+                noMessage.textContent = messages[noClicks - 1];
+            } else {
+                noMessage.textContent = "I will keep asking with hope...";
+            }
+            
+            // Make YES button bigger (as requested)
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            // Make NO button move randomly within container
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+            
+            // Calculate max positions (keeping button fully visible)
+            const maxX = containerRect.width - btnRect.width;
+            const maxY = containerRect.height - btnRect.height;
+            
+            // Generate random position within container
+            const randomX = Math.floor(Math.random() * Math.max(0, maxX));
+            const randomY = Math.floor(Math.random() * Math.max(0, maxY));
+            
+            // Position NO button absolutely within container
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            
+            // Add pulse animation to YES button
+            yesBtn.style.animation = 'pulse 0.5s';
+            setTimeout(() => {
+                yesBtn.style.animation = '';
+            }, 500);
+        });
+        
+        // Create elegant fireworks animation
+        function createFireworks() {
+            // Clear any existing fireworks
+            fireworksContainer.innerHTML = '';
+            
+            // Create multiple fireworks
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.classList.add('firework');
+                    
+                    // Random position
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    
+                    // Use palette colors for fireworks
+                    const colors = ['#C5A059', '#DCAE96', '#FFFFFF', '#FFD700'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    firework.style.left = `${x}%`;
+                    firework.style.top = `${y}%`;
+                    firework.style.backgroundColor = color;
+                    firework.style.boxShadow = `0 0 20px ${color}, 0 0 40px ${color}`;
+                    
+                    fireworksContainer.appendChild(firework);
+                    
+                    // Animate the firework
+                    const size = Math.random() * 25 + 15;
+                    const duration = Math.random() * 1.2 + 0.6;
+                    
+                    firework.animate([
+                        { transform: 'scale(0) rotate(0deg)', opacity: 1 },
+                        { transform: `scale(${size}) rotate(180deg)`, opacity: 0 }
+                    ], {
+                        duration: duration * 1000,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+                    
+                    // Remove firework after animation
+                    setTimeout(() => {
+                        if (firework.parentNode) {
+                            firework.parentNode.removeChild(firework);
+                        }
+                    }, duration * 1000);
+                }, i * 150);
+            }
+            
+            // Keep creating fireworks every 2.5 seconds
+            const fireworksInterval = setInterval(() => {
+                if (!fireworksContainer.classList.contains('hidden')) {
+                    const firework = document.createElement('div');
+                    firework.classList.add('firework');
+                    
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    
+                    const colors = ['#C5A059', '#DCAE96', '#FFFFFF'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    firework.style.left = `${x}%`;
+                    firework.style.top = `${y}%`;
+                    firework.style.backgroundColor = color;
+                    firework.style.boxShadow = `0 0 20px ${color}`;
+                    
+                    fireworksContainer.appendChild(firework);
+                    
+                    const size = Math.random() * 20 + 10;
+                    const duration = Math.random() * 1 + 0.5;
+                    
+                    firework.animate([
+                        { transform: 'scale(0)', opacity: 1 },
+                        { transform: `scale(${size})`, opacity: 0 }
+                    ], {
+                        duration: duration * 1000,
+                        easing: 'ease-out'
+                    });
+                    
+                    setTimeout(() => {
+                        if (firework.parentNode) {
+                            firework.parentNode.removeChild(firework);
+                        }
+                    }, duration * 1000);
+                } else {
+                    clearInterval(fireworksInterval);
+                }
+            }, 2500);
+        }
+        
+        // Initialize button transitions
+        setTimeout(() => {
+            yesBtn.style.transition = 'transform 0.4s ease';
+            noBtn.style.transition = 'left 0.3s ease, top 0.3s ease';
+        }, 500);
+        
+        // Add some initial sparkle to the title heart
+        const heart = document.querySelector('.heart');
+        setInterval(() => {
+            heart.style.textShadow = '0 0 10px #DCAE96';
+            setTimeout(() => {
+                heart.style.textShadow = 'none';
+            }, 300);
+        }, 3000);
+    </script>
+</body>
+</html>
